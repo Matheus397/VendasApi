@@ -1,0 +1,6 @@
+C:\Users\Treinamento 1\Desktop\VendasApi\VendaApi\Core\bin\Debug\netcoreapp2.2\Core.deps.json
+C:\Users\Treinamento 1\Desktop\VendasApi\VendaApi\Core\bin\Debug\netcoreapp2.2\Core.dll
+C:\Users\Treinamento 1\Desktop\VendasApi\VendaApi\Core\obj\Debug\netcoreapp2.2\Core.csproj.CoreCompileInputs.cache
+C:\Users\Treinamento 1\Desktop\VendasApi\VendaApi\Core\obj\Debug\netcoreapp2.2\Core.AssemblyInfoInputs.cache
+C:\Users\Treinamento 1\Desktop\VendasApi\VendaApi\Core\obj\Debug\netcoreapp2.2\Core.AssemblyInfo.cs
+C:\Users\Treinamento 1\Desktop\VendasApi\VendaApi\Core\obj\Debug\netcoreapp2.2\Core.csprojAssemblyReference.cache
