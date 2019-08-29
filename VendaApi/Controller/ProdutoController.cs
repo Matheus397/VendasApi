@@ -1,16 +1,18 @@
-﻿using System.Threading.Tasks;
+﻿using System.Collections.Generic;
+using System.Threading.Tasks;
 using Core;
 using Microsoft.AspNetCore.Mvc;
 using Model;
-using Vendas;
 
 namespace ApiProject.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class ProdutoController : ControllerBase
+    public class ProdutosController : ControllerBase
     {
         [HttpPost]
+        [ProducesResponseType(201, Type = typeof(Produto))]
+        [ProducesResponseType(400)]
         public async Task<IActionResult> Post([FromBody] Produto produto)
         {
             var cadastro = new ProdutoCore(produto).CadastroProduto();
@@ -19,28 +21,43 @@ namespace ApiProject.Controllers
             return BadRequest(cadastro.Resultado);
         }
 
-        [HttpGet("{id}")]
-        public async Task<IActionResult> Get(int id)
+        [HttpGet("buscaPorId")]
+        [ProducesResponseType(200, Type = typeof(Produto))]
+        [ProducesResponseType(400)]
+        public async Task<IActionResult> Get([FromQuery] int id)
         {
-
             var exibe = new ProdutoCore().ExibirProdutoId(id);
             if (exibe.Status)
                 return Ok(exibe.Resultado);
             return BadRequest(exibe.Resultado);
         }
 
-        [HttpGet]
-        public async Task<IActionResult> GetAll()
+        [HttpGet("buscaPorData")]
+        [ProducesResponseType(200, Type = typeof(Produto))]
+        [ProducesResponseType(400)]
+        public async Task<IActionResult> GetDate([FromQuery] string dataCadastro)
         {
-
-            var exibe = new ProdutoCore().ExibirTodosProdutos();
+            var exibe = new ProdutoCore().ExibirProdutoDataCadastro(dataCadastro);
             if (exibe.Status)
                 return Ok(exibe.Resultado);
             return BadRequest(exibe.Resultado);
         }
 
-        [HttpDelete("{id}")]
-        public async Task<IActionResult> Delete(int id)
+        [HttpGet("buscaPaginada")]
+        [ProducesResponseType(200, Type = typeof(List<Produto>))]
+        [ProducesResponseType(400)]
+        public async Task<IActionResult> GetAll([FromQuery] int page, [FromQuery] int sizePage)
+        {
+            var exibe = new ProdutoCore().ExibirTodosProdutos(page, sizePage);
+            if (exibe.Status)
+                return Ok(exibe.Resultado);
+            return BadRequest(exibe.Resultado);
+        }
+
+        [HttpDelete("deletePorId")]
+        [ProducesResponseType(200)]
+        [ProducesResponseType(400)]
+        public async Task<IActionResult> Delete([FromQuery] int id)
         {
             var deleta = new ProdutoCore().DeletarProdutoId(id);
             if (deleta.Status)
@@ -48,10 +65,12 @@ namespace ApiProject.Controllers
             return BadRequest(deleta.Resultado);
         }
 
-        [HttpPut("{id}")]
-        public async Task<IActionResult> Put(int id, [FromBody] Produto produto)
+        [HttpPut("atualizaPorId")]
+        [ProducesResponseType(200, Type = typeof(Produto))]
+        [ProducesResponseType(400)]
+        public async Task<IActionResult> Put([FromQuery] int id, [FromBody] Produto pauta)
         {
-            var atualiza = new ProdutoCore().AtualizarProdutoId(produto, id);
+            var atualiza = new ProdutoCore().AtualizarProdutoId(pauta, id);
             if (atualiza.Status)
                 return Ok(atualiza.Resultado);
             return BadRequest(atualiza.Resultado);

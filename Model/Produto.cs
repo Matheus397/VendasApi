@@ -4,9 +4,8 @@ using System.Text;
 
 namespace Model
 {
-    public class Produto
+    public class Produto : Base
     {
-        public int id_Produto { get; set; }
         public string nome_Produto { get; set; }
         public double valor_Produto { get; set; }       
     }

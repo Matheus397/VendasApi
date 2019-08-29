@@ -4,3 +4,9 @@ C:\Users\Treinamento 1\Desktop\VendasApi\VendaApi\Core\obj\Debug\netcoreapp2.2\C
 C:\Users\Treinamento 1\Desktop\VendasApi\VendaApi\Core\obj\Debug\netcoreapp2.2\Core.AssemblyInfoInputs.cache
 C:\Users\Treinamento 1\Desktop\VendasApi\VendaApi\Core\obj\Debug\netcoreapp2.2\Core.AssemblyInfo.cs
 C:\Users\Treinamento 1\Desktop\VendasApi\VendaApi\Core\obj\Debug\netcoreapp2.2\Core.csprojAssemblyReference.cache
+C:\Users\Treinamento 1\Desktop\VendasApi\VendaApi\Core\bin\Debug\netcoreapp2.2\Core.pdb
+C:\Users\Treinamento 1\Desktop\VendasApi\VendaApi\Core\bin\Debug\netcoreapp2.2\Model.dll
+C:\Users\Treinamento 1\Desktop\VendasApi\VendaApi\Core\bin\Debug\netcoreapp2.2\Model.pdb
+C:\Users\Treinamento 1\Desktop\VendasApi\VendaApi\Core\obj\Debug\netcoreapp2.2\Core.csproj.CopyComplete
+C:\Users\Treinamento 1\Desktop\VendasApi\VendaApi\Core\obj\Debug\netcoreapp2.2\Core.dll
+C:\Users\Treinamento 1\Desktop\VendasApi\VendaApi\Core\obj\Debug\netcoreapp2.2\Core.pdb

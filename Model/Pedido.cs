@@ -4,11 +4,10 @@ using Vendas;
 
 namespace Model
 {
-    public class Pedido
+    public class Pedido : Base
     {
-        public int id_Pedido { get; set; }
-        public DateTime data_Pedido { get; set; }
-        public double total_Pedido { get; set; }       
+        public double total_Pedido { get; set; }
+        public List<Produto> produtosPedido { get; set; }           
         public Cliente cliente_pedido { get; set; }     
     }
 }

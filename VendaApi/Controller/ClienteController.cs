@@ -1,4 +1,5 @@
-﻿using System.Threading.Tasks;
+﻿using System.Collections.Generic;
+using System.Threading.Tasks;
 using Core;
 using Microsoft.AspNetCore.Mvc;
 using Vendas;
@@ -7,9 +8,11 @@ namespace ApiProject.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class EleitoresController : ControllerBase
+    public class ClientesController : ControllerBase
     {
         [HttpPost]
+        [ProducesResponseType(201, Type = typeof(Cliente))]
+        [ProducesResponseType(400)]
         public async Task<IActionResult> Post([FromBody] Cliente cliente)
         {
             var cadastro = new ClienteCore(cliente).CadastroCliente();
@@ -18,37 +21,55 @@ namespace ApiProject.Controllers
             return BadRequest(cadastro.Resultado);
         }
 
-        [HttpGet("{id}")]
-        public async Task<IActionResult> Get(int id)
+        [HttpGet("buscaPorId")]
+        [ProducesResponseType(200, Type = typeof(Cliente))]
+        [ProducesResponseType(400)]
+        public async Task<IActionResult> Get([FromQuery] int id)
         {
-
             var exibe = new ClienteCore().ExibirClienteId(id);
             if (exibe.Status)
                 return Ok(exibe.Resultado);
             return BadRequest(exibe.Resultado);
         }
 
-        [HttpGet]
-        public async Task<IActionResult> GetAll()
+        [HttpGet("buscaPorData")]
+        [ProducesResponseType(200, Type = typeof(Cliente))]
+        [ProducesResponseType(400)]
+        public async Task<IActionResult> GetDate([FromQuery] string dataCadastro)
         {
-
-            var exibe = new ClienteCore().ExibirTodos();
+            var exibe = new ClienteCore().ExibirClienteDataCadastro(dataCadastro);
             if (exibe.Status)
                 return Ok(exibe.Resultado);
             return BadRequest(exibe.Resultado);
         }
 
-        [HttpDelete("{id}")]
-        public async Task<IActionResult> Delete(int id)
+        [HttpGet("buscaPaginada")]
+        [ProducesResponseType(200, Type = typeof(List<Cliente>))]
+        [ProducesResponseType(400)]
+        public async Task<IActionResult> GetAll([FromQuery] int page, [FromQuery] int sizePage)
+        {
+            var exibe = new ClienteCore().ExibirTodos(page, sizePage);
+            if (exibe.Status)
+                return Ok(exibe.Resultado);
+            return BadRequest(exibe.Resultado);
+        }
+
+        [HttpDelete("deletePorId")]
+        [ProducesResponseType(200)]
+        [ProducesResponseType(400)]
+        public async Task<IActionResult> Delete([FromQuery] int id)
         {
             var deleta = new ClienteCore().DeletarClienteId(id);
+
             if (deleta.Status)
                 return Ok(deleta.Resultado);
             return BadRequest(deleta.Resultado);
         }
 
-        [HttpPut("{id}")]
-        public async Task<IActionResult> Put(int id, [FromBody] Cliente cliente)
+        [HttpPut("atualizaPorId")]
+        [ProducesResponseType(200, Type = typeof(Cliente))]
+        [ProducesResponseType(400)]
+        public async Task<IActionResult> Put([FromQuery] int id, [FromBody] Cliente cliente)
         {
             var atualiza = new ClienteCore().AtualizarId(cliente, id);
             if (atualiza.Status)

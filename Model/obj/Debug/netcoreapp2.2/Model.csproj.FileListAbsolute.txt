@@ -1,0 +1,9 @@
+C:\Users\Treinamento 1\Desktop\VendasApi\VendaApi\Model\bin\Debug\netcoreapp2.2\Model.deps.json
+C:\Users\Treinamento 1\Desktop\VendasApi\VendaApi\Model\bin\Debug\netcoreapp2.2\Model.dll
+C:\Users\Treinamento 1\Desktop\VendasApi\VendaApi\Model\bin\Debug\netcoreapp2.2\Model.pdb
+C:\Users\Treinamento 1\Desktop\VendasApi\VendaApi\Model\obj\Debug\netcoreapp2.2\Model.csprojAssemblyReference.cache
+C:\Users\Treinamento 1\Desktop\VendasApi\VendaApi\Model\obj\Debug\netcoreapp2.2\Model.csproj.CoreCompileInputs.cache
+C:\Users\Treinamento 1\Desktop\VendasApi\VendaApi\Model\obj\Debug\netcoreapp2.2\Model.AssemblyInfoInputs.cache
+C:\Users\Treinamento 1\Desktop\VendasApi\VendaApi\Model\obj\Debug\netcoreapp2.2\Model.AssemblyInfo.cs
+C:\Users\Treinamento 1\Desktop\VendasApi\VendaApi\Model\obj\Debug\netcoreapp2.2\Model.dll
+C:\Users\Treinamento 1\Desktop\VendasApi\VendaApi\Model\obj\Debug\netcoreapp2.2\Model.pdb

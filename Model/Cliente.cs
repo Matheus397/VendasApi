@@ -1,11 +1,11 @@
 ﻿using System.Collections.Generic;
 using System;
+using Model;
 
 namespace Vendas
 {   
-    public class Cliente
+    public class Cliente : Base
     {
-        public int Id { get; set; }
         public string Nome { get; set; }
     }
 }

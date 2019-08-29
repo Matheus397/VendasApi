@@ -12,3 +12,8 @@ C:\Users\Treinamento 1\Desktop\VendasApi\VendaApi\VendaApi\obj\Debug\netcoreapp2
 C:\Users\Treinamento 1\Desktop\VendasApi\VendaApi\VendaApi\obj\Debug\netcoreapp2.2\VendaApi.RazorTargetAssemblyInfo.cache
 C:\Users\Treinamento 1\Desktop\VendasApi\VendaApi\VendaApi\obj\Debug\netcoreapp2.2\VendaApi.dll
 C:\Users\Treinamento 1\Desktop\VendasApi\VendaApi\VendaApi\obj\Debug\netcoreapp2.2\VendaApi.pdb
+C:\Users\Treinamento 1\Desktop\VendasApi\VendaApi\VendaApi\bin\Debug\netcoreapp2.2\Core.dll
+C:\Users\Treinamento 1\Desktop\VendasApi\VendaApi\VendaApi\bin\Debug\netcoreapp2.2\Model.dll
+C:\Users\Treinamento 1\Desktop\VendasApi\VendaApi\VendaApi\bin\Debug\netcoreapp2.2\Core.pdb
+C:\Users\Treinamento 1\Desktop\VendasApi\VendaApi\VendaApi\bin\Debug\netcoreapp2.2\Model.pdb
+C:\Users\Treinamento 1\Desktop\VendasApi\VendaApi\VendaApi\obj\Debug\netcoreapp2.2\VendaApi.csproj.CopyComplete

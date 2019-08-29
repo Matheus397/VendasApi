@@ -2,24 +2,28 @@
 using FluentValidation;
 using Core.util;
 using System.Linq;
-using System;
-using Vendas;
+using System.Collections.Generic;
+
 namespace Core
 {
     public class ProdutoCore : AbstractValidator<Produto>
     {
         private Produto _produto { get; set; }
+
         public ProdutoCore(Produto produto)
         {
             _produto = produto;
 
-            RuleFor(e => e.id_Produto)
+            RuleFor(e => e.Id)               
                 .NotNull()
-                .WithMessage("Id de produto inválido");
-
-            RuleFor(e => e.valor_Produto)
-                .NotNull()
-                .WithMessage("O valor do produto não pode ser nulo!");
+                .WithMessage("Id inválida");
+            RuleFor(e => e.nome_Produto)
+               .Length(3, 25)
+               .NotNull()
+               .WithMessage("Nome inválida");
+            RuleFor(e => e.valor_Produto)              
+               .NotNull()
+               .WithMessage("Preço inválida");
         }
 
         public ProdutoCore() { }
@@ -28,23 +32,18 @@ namespace Core
         {
 
             var results = Validate(_produto);
-
-            // Se o modelo é inválido, retorno false
             if (!results.IsValid)
                 return new Retorno { Status = false, Resultado = results.Errors };
 
-            // Caso o modelo seja válido, escreve no arquivo db
             var db = file.ManipulacaoDeArquivos(true, null);
 
             if (db.sistema == null)
                 db.sistema = new Sistema();
 
-            if (db.sistema.Produtos.Exists(x => x.id_Produto == _produto.id_Produto))
+            if (db.sistema.Produtos.Exists(x => x.Id == _produto.Id))
             {
-
-                return new Retorno() { Status = true, Resultado = "Id de produto já cadastrado" };
+                return new Retorno() { Status = true, Resultado = "Produto já cadastrado" };
             }
-
             db.sistema.Produtos.Add(_produto);
 
             file.ManipulacaoDeArquivos(false, db.sistema);
@@ -55,65 +54,70 @@ namespace Core
         public Retorno ExibirProdutoId(int id)
         {
 
-            var t = file.ManipulacaoDeArquivos(true, null);
-
-            if (t.sistema == null)
-                t.sistema = new Sistema();
-
-            var p = t.sistema.Produtos.Where(x => x.id_Produto == id);
-            return new Retorno() { Status = true, Resultado = p };
+            var arquivo = file.ManipulacaoDeArquivos(true, null);
+            if (arquivo.sistema == null)
+                arquivo.sistema = new Sistema();
+            var resultado = arquivo.sistema.Produtos.Where(x => x.Id == id);
+            return new Retorno() { Status = true, Resultado = resultado };
 
         }
 
-        public Retorno ExibirTodosProdutos()
+        public Retorno ExibirProdutoDataCadastro(string dataCadastro)
         {
-            var y = file.ManipulacaoDeArquivos(true, null);
+            var arquivo = file.ManipulacaoDeArquivos(true, null);
 
-            if (y.sistema == null)
-                y.sistema = new Sistema();
+            if (arquivo.sistema == null)
+                arquivo.sistema = new Sistema();
+            var resultado = arquivo.sistema.Produtos.Where(x => x.DataCadastro.ToString("ddMMyyyy").Equals(dataCadastro));
+            return new Retorno() { Status = true, Resultado = resultado };
+        }
 
-            var q = y.sistema.Produtos;
-            return new Retorno() { Status = true, Resultado = q };
+        public Retorno ExibirTodosProdutos(int page, int sizePage)
+        {
+            var arquivo = file.ManipulacaoDeArquivos(true, null);
+            if (arquivo.sistema == null)
+                arquivo.sistema = new Sistema();
+            Base classeBase = new Base();
+            List<Produto> thirdPage = classeBase.GetPage(arquivo.sistema.Produtos, page, sizePage);
+            return new Retorno() { Status = true, Resultado = thirdPage };
         }
 
         public Retorno DeletarProdutoId(int id)
         {
-            var t = file.ManipulacaoDeArquivos(true, null);
+            var arquivo = file.ManipulacaoDeArquivos(true, null);
+            if (arquivo.sistema == null)
+                arquivo.sistema = new Sistema();
+            var resultado = arquivo.sistema.Produtos.Remove(arquivo.sistema.Produtos.Find(s => s.Id == id));
 
-            if (t.sistema == null)
-                t.sistema = new Sistema();
-
-            var p = t.sistema.Produtos.Remove(t.sistema.Produtos.Find(s => s.id_Produto == id));
-
-            file.ManipulacaoDeArquivos(false, t.sistema);
-
-            return new Retorno() { Status = true, Resultado = null };
+            file.ManipulacaoDeArquivos(false, arquivo.sistema);
+            return new Retorno() { Status = true, Resultado = "Produto Deletada!" };
         }
 
-        public Retorno AtualizarProdutoId(Produto novo, int id)
+        public Retorno AtualizarProdutoId(Produto nova, int id)
         {
-            var f = file.ManipulacaoDeArquivos(true, null);
+            var arquivo = file.ManipulacaoDeArquivos(true, null);
 
-            if (f.sistema == null)
-                f.sistema = new Sistema();
+            if (arquivo.sistema == null)
+                arquivo.sistema = new Sistema();
 
-            var velho = f.sistema.Produtos.Find(s => s.id_Produto == id);
-            var troca = TrocaDadosProduto(novo, velho);
+            var velha = arquivo.sistema.Produtos.Find(s => s.Id == id);
+            var troca = TrocaProduto(nova, velha);
 
-            f.sistema.Produtos.Add(troca);
-            f.sistema.Produtos.Remove(velho);
+            arquivo.sistema.Produtos.Add(troca);
+            arquivo.sistema.Produtos.Remove(velha);
 
-            file.ManipulacaoDeArquivos(false, f.sistema);
+            file.ManipulacaoDeArquivos(false, arquivo.sistema);
 
-            return new Retorno() { Status = true, Resultado = troca };
+            return new Retorno() { Status = true, Resultado = $"{troca}\n\nProduto Atualizado!" };
         }
 
-        public Produto TrocaDadosProduto(Produto novo, Produto velho)
+        public Produto TrocaProduto(Produto nova, Produto velha)
         {
-            if (velho.id_Produto == 0) novo.id_Produto = velho.id_Produto;
-            if (velho.valor_Produto == 0) novo.valor_Produto = velho.valor_Produto;
-            if (velho.nome_Produto == null) novo.nome_Produto = velho.nome_Produto;
-            return novo;
+            velha.nome_Produto = nova.nome_Produto;       
+            velha.valor_Produto = nova.valor_Produto;
+            nova.DataCadastro = velha.DataCadastro;
+            nova.Id = velha.Id;
+            return nova;
         }
     }
 }
