@@ -7,3 +7,12 @@ C:\Users\Treinamento 1\Desktop\VendasApi\VendaApi\Model\obj\Debug\netcoreapp2.2\
 C:\Users\Treinamento 1\Desktop\VendasApi\VendaApi\Model\obj\Debug\netcoreapp2.2\Model.AssemblyInfo.cs
 C:\Users\Treinamento 1\Desktop\VendasApi\VendaApi\Model\obj\Debug\netcoreapp2.2\Model.dll
 C:\Users\Treinamento 1\Desktop\VendasApi\VendaApi\Model\obj\Debug\netcoreapp2.2\Model.pdb
+C:\Users\mathe\Desktop\VendasApi\VendasApi\Model\bin\Debug\netcoreapp2.2\Model.deps.json
+C:\Users\mathe\Desktop\VendasApi\VendasApi\Model\bin\Debug\netcoreapp2.2\Model.dll
+C:\Users\mathe\Desktop\VendasApi\VendasApi\Model\bin\Debug\netcoreapp2.2\Model.pdb
+C:\Users\mathe\Desktop\VendasApi\VendasApi\Model\obj\Debug\netcoreapp2.2\Model.csprojAssemblyReference.cache
+C:\Users\mathe\Desktop\VendasApi\VendasApi\Model\obj\Debug\netcoreapp2.2\Model.csproj.CoreCompileInputs.cache
+C:\Users\mathe\Desktop\VendasApi\VendasApi\Model\obj\Debug\netcoreapp2.2\Model.AssemblyInfoInputs.cache
+C:\Users\mathe\Desktop\VendasApi\VendasApi\Model\obj\Debug\netcoreapp2.2\Model.AssemblyInfo.cs
+C:\Users\mathe\Desktop\VendasApi\VendasApi\Model\obj\Debug\netcoreapp2.2\Model.dll
+C:\Users\mathe\Desktop\VendasApi\VendasApi\Model\obj\Debug\netcoreapp2.2\Model.pdb

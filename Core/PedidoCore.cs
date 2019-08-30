@@ -1,104 +1,108 @@
-﻿//using Model;
-//using FluentValidation;
-//using Core.util;
-//using System.Linq;
-//using System;
+﻿using Model;
+using FluentValidation;
+using Core.util;
+using System.Linq;
+using System;
+using System.Collections.Generic;
 
-//namespace Core
-//{
-//    public class VotoCore : AbstractValidator<Voto>
-//    {
+namespace Core
+{
+    public class PedidoCore : AbstractValidator<Pedido>
+    {
 
-//        //getters setters privados
-//        private Voto _voto { get; set; }
-//        public VotoCore(Voto voto)
-//        {
-//            _voto = voto;
-//            RuleFor(e => e.PautaId)
-//                .NotNull()
-//                .WithMessage("Pauta Id inválido");
+        //getters setters privados
+        private Pedido _pedido { get; set; }
+        public PedidoCore(Pedido pedido)
+        {
+            _pedido = pedido;
+            RuleFor(e => e.Id)
+                .NotNull()
+                .WithMessage("Pauta Id inválido");
 
-//            RuleFor(e => e.EleitorId)
-//                .NotNull()
-//                .WithMessage("Eleitor Id inválido");
-//        }
-//        //construtor vazio
-//        public VotoCore() { }
+        }
+        //construtor vazio
+        public PedidoCore() { }
 
-//        public Retorno CadastroVoto()
-//        {
-//            try
-//            {
-//                var results = Validate(_voto);
-//                if (!results.IsValid)
-//                    return new Retorno { Status = false, Resultado = results.Errors };
+        public Retorno CadastroPedido()
+        {
+            try
+            {
+                var results = Validate(_pedido);
+                if (!results.IsValid)
+                    return new Retorno { Status = false, Resultado = results.Errors };
 
-//                var db = file.ManipulacaoDeArquivos(true, null);
+                var db = file.ManipulacaoDeArquivos(true, null);
 
-//                var sessao = db.sistema.todasSessoes.Find(d => d.eleitoresSessao.Exists(x => x.Id == _voto.EleitorId));
+                var pedidos = db.sistema.Pedidos;
 
-//                if (sessao.Encerrada == true)
-//                    return new Retorno { Status = false, Resultado = "Esta sessão já foi encerrada" };
+                if (db.sistema == null)
+                    db.sistema = new Sistema();
 
-//                if (db.sistema == null)
-//                    db.sistema = new Sistema();
+                if (pedidos.Exists(x => x.Id == _pedido.Id))           
+                    return new Retorno() { Status = true, Resultado = "Já existe um pedido com esse Id" };
+                
+                var pedidoCli = db.sistema.Pedidos.Find(s => s.Id == _pedido.Id);
 
-//                if (sessao.votoSessao.Exists(x => x.PautaId == _voto.PautaId && x.EleitorId == _voto.EleitorId))
-//                {
-//                    return new Retorno() { Status = true, Resultado = "Eleitor já votou" };
-//                }
+                var produtosDoPedido = pedidoCli.produtosPedido;               
 
-//                var pautaSendoVotada = sessao.pautasSessao.Find(u => u.Id == _voto.PautaId);
+                foreach (var prod in produtosDoPedido)
+                    pedidoCli.total_Pedido += prod.valor_Produto;
 
-//                if (pautaSendoVotada.Encerrada == true)
-//                    return new Retorno() { Status = true, Resultado = "Pauta já encerrada" };
+                db.sistema.Pedidos.Add(pedidoCli);
 
-//                db.sistema.Votos.Add(_voto);
-//                sessao.votoSessao.Add(_voto);
+                file.ManipulacaoDeArquivos(false, db.sistema);
+                return new Retorno() { Status = true, Resultado = _pedido };
+            }
+            catch
+            {
+                return new Retorno() { Status = true, Resultado = "Erro no Pedido" };
+            }
+        }
 
-//                var votosDaPauta = sessao.votoSessao.Where(s => s.PautaId == pautaSendoVotada.Id);
+        public Retorno ExibirTodosPedidos(int page, int sizePage)
+        {
 
-//                pautaSendoVotada.Encerrada = sessao.eleitoresSessao.Count() == votosDaPauta.Count();
+            var arquivo = file.ManipulacaoDeArquivos(true, null);
 
-//                var pautaVelha = db.sistema.Pautas.Find(w => w.Id == pautaSendoVotada.Id);
+            if (arquivo.sistema == null)
+                arquivo.sistema = new Sistema();
 
-//                db.sistema.Pautas.Remove(pautaVelha);
-//                db.sistema.Pautas.Add(pautaSendoVotada);
+            Base classeBase = new Base();
+            List<Pedido> thirdPage = classeBase.GetPage(arquivo.sistema.Pedidos, page, sizePage);
+            return new Retorno() { Status = true, Resultado = thirdPage };
+        }
 
-//                foreach (var item in sessao.pautasSessao)
-//                    if (item.Encerrada == false)
-//                        sessao.Encerrada = false;
-//                    else
-//                        sessao.Encerrada = true;
+        public Retorno ExibirPedidoId(int id)
+        {
+            var arquivo = file.ManipulacaoDeArquivos(true, null);
 
-//                file.ManipulacaoDeArquivos(false, db.sistema);
-//                return new Retorno() { Status = true, Resultado = _voto };
-//            }
-//            catch
-//            {
-//                return new Retorno() { Status = true, Resultado = "Eleitor ou Pauta não pertencem à sessão" };
-//            }
-//        }
+            if (arquivo.sistema == null)
+                arquivo.sistema = new Sistema();
+            var pedidos = arquivo.sistema.Pedidos.Where(x => x.Id == id);
+            return new Retorno() { Status = true, Resultado = pedidos };
+        }
 
-//        public Retorno ExibirTodosVotos()
-//        {
-//            var arquivo = file.ManipulacaoDeArquivos(true, null);
+        public Retorno ExibirPedidoDataCadastro(string dataCadastro)
+        {
+            var arquivo = file.ManipulacaoDeArquivos(true, null);
 
-//            if (arquivo.sistema == null)
-//                arquivo.sistema = new Sistema();
+            if (arquivo.sistema == null)
+                arquivo.sistema = new Sistema();
 
-//            var votos = arquivo.sistema.Votos;
-//            return new Retorno() { Status = true, Resultado = votos };
-//        }
+            var resultado = arquivo.sistema.Pedidos.Where(x => x.DataCadastro.ToString("ddMMyyyy").Equals(dataCadastro));
+            return new Retorno() { Status = true, Resultado = resultado };
+        }
 
-//        public Retorno ExibirVotoId(string id)
-//        {
-//            var arquivo = file.ManipulacaoDeArquivos(true, null);
+        public Retorno DeletarPedidoId(int id)
+        {
+            var arquivo = file.ManipulacaoDeArquivos(true, null);
 
-//            if (arquivo.sistema == null)
-//                arquivo.sistema = new Sistema();
-//            var votos = arquivo.sistema.Votos.Where(x => x.PautaId == new Guid(id));
-//            return new Retorno() { Status = true, Resultado = votos };
-//        }
-//    }
-//}
+            if (arquivo.sistema == null)
+                arquivo.sistema = new Sistema();
+
+            var resultado = arquivo.sistema.Pedidos.Remove(arquivo.sistema.Pedidos.Find(s => s.Id == id));
+            file.ManipulacaoDeArquivos(false, arquivo.sistema);
+            return new Retorno() { Status = true, Resultado = null };
+        }
+    }
+}

@@ -23,7 +23,7 @@ namespace Core
                .WithMessage("Nome inválida");
             RuleFor(e => e.valor_Produto)              
                .NotNull()
-               .WithMessage("Preço inválida");
+               .WithMessage("Preço inválido");
         }
 
         public ProdutoCore() { }
@@ -74,11 +74,16 @@ namespace Core
 
         public Retorno ExibirTodosProdutos(int page, int sizePage)
         {
+
             var arquivo = file.ManipulacaoDeArquivos(true, null);
+
             if (arquivo.sistema == null)
                 arquivo.sistema = new Sistema();
+
             Base classeBase = new Base();
+
             List<Produto> thirdPage = classeBase.GetPage(arquivo.sistema.Produtos, page, sizePage);
+
             return new Retorno() { Status = true, Resultado = thirdPage };
         }
 
