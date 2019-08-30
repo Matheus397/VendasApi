@@ -1,23 +1,23 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\mathe\\Desktop\\VendasApi\\VendasApi\\Core\\Core.csproj": {}
+    "C:\\Users\\Treinamento 1\\Desktop\\VendasApi\\VendasApi\\Core\\Core.csproj": {}
   },
   "projects": {
-    "C:\\Users\\mathe\\Desktop\\VendasApi\\VendasApi\\Core\\Core.csproj": {
+    "C:\\Users\\Treinamento 1\\Desktop\\VendasApi\\VendasApi\\Core\\Core.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\mathe\\Desktop\\VendasApi\\VendasApi\\Core\\Core.csproj",
+        "projectUniqueName": "C:\\Users\\Treinamento 1\\Desktop\\VendasApi\\VendasApi\\Core\\Core.csproj",
         "projectName": "Core",
-        "projectPath": "C:\\Users\\mathe\\Desktop\\VendasApi\\VendasApi\\Core\\Core.csproj",
-        "packagesPath": "C:\\Users\\mathe\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\mathe\\Desktop\\VendasApi\\VendasApi\\Core\\obj\\",
+        "projectPath": "C:\\Users\\Treinamento 1\\Desktop\\VendasApi\\VendasApi\\Core\\Core.csproj",
+        "packagesPath": "C:\\Users\\Treinamento 1\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\Treinamento 1\\Desktop\\VendasApi\\VendasApi\\Core\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
         ],
         "configFilePaths": [
-          "C:\\Users\\mathe\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\Treinamento 1\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
@@ -30,8 +30,8 @@
         "frameworks": {
           "netcoreapp2.2": {
             "projectReferences": {
-              "C:\\Users\\mathe\\Desktop\\VendasApi\\VendasApi\\Model\\Model.csproj": {
-                "projectPath": "C:\\Users\\mathe\\Desktop\\VendasApi\\VendasApi\\Model\\Model.csproj"
+              "C:\\Users\\Treinamento 1\\Desktop\\VendasApi\\VendasApi\\Model\\Model.csproj": {
+                "projectPath": "C:\\Users\\Treinamento 1\\Desktop\\VendasApi\\VendasApi\\Model\\Model.csproj"
               }
             }
           }
@@ -72,20 +72,20 @@
         }
       }
     },
-    "C:\\Users\\mathe\\Desktop\\VendasApi\\VendasApi\\Model\\Model.csproj": {
+    "C:\\Users\\Treinamento 1\\Desktop\\VendasApi\\VendasApi\\Model\\Model.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\mathe\\Desktop\\VendasApi\\VendasApi\\Model\\Model.csproj",
+        "projectUniqueName": "C:\\Users\\Treinamento 1\\Desktop\\VendasApi\\VendasApi\\Model\\Model.csproj",
         "projectName": "Model",
-        "projectPath": "C:\\Users\\mathe\\Desktop\\VendasApi\\VendasApi\\Model\\Model.csproj",
-        "packagesPath": "C:\\Users\\mathe\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\mathe\\Desktop\\VendasApi\\VendasApi\\Model\\obj\\",
+        "projectPath": "C:\\Users\\Treinamento 1\\Desktop\\VendasApi\\VendasApi\\Model\\Model.csproj",
+        "packagesPath": "C:\\Users\\Treinamento 1\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\Treinamento 1\\Desktop\\VendasApi\\VendasApi\\Model\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
         ],
         "configFilePaths": [
-          "C:\\Users\\mathe\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\Treinamento 1\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [

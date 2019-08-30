@@ -11,6 +11,7 @@ namespace ApiProject.Controllers
     public class ClientesController : ControllerBase
     {
         [HttpPost]
+        //post usando frombody e passadno o objeto cliente
         [ProducesResponseType(201, Type = typeof(Cliente))]
         [ProducesResponseType(400)]
         public async Task<IActionResult> Post([FromBody] Cliente cliente)
@@ -20,7 +21,7 @@ namespace ApiProject.Controllers
                 return Created("https://localhost", cadastro.Resultado);
             return BadRequest(cadastro.Resultado);
         }
-
+        //busca por id fromquery
         [HttpGet("buscaPorId")]
         [ProducesResponseType(200, Type = typeof(Cliente))]
         [ProducesResponseType(400)]
@@ -31,7 +32,7 @@ namespace ApiProject.Controllers
                 return Ok(exibe.Resultado);
             return BadRequest(exibe.Resultado);
         }
-
+        //busca por data fromquery
         [HttpGet("buscaPorData")]
         [ProducesResponseType(200, Type = typeof(Cliente))]
         [ProducesResponseType(400)]
@@ -42,7 +43,7 @@ namespace ApiProject.Controllers
                 return Ok(exibe.Resultado);
             return BadRequest(exibe.Resultado);
         }
-
+        //buscapaginada passando os inteiros que definiraro a config das paginas
         [HttpGet("buscaPaginada")]
         [ProducesResponseType(200, Type = typeof(List<Cliente>))]
         [ProducesResponseType(400)]
@@ -53,19 +54,18 @@ namespace ApiProject.Controllers
                 return Ok(exibe.Resultado);
             return BadRequest(exibe.Resultado);
         }
-
+        //delete fromquery
         [HttpDelete("deletePorId")]
         [ProducesResponseType(200)]
         [ProducesResponseType(400)]
         public async Task<IActionResult> Delete([FromQuery] int id)
         {
             var deleta = new ClienteCore().DeletarClienteId(id);
-
             if (deleta.Status)
                 return Ok(deleta.Resultado);
             return BadRequest(deleta.Resultado);
         }
-
+        //atualizando via id fromquery e os dados da atualização frombody
         [HttpPut("atualizaPorId")]
         [ProducesResponseType(200, Type = typeof(Cliente))]
         [ProducesResponseType(400)]
