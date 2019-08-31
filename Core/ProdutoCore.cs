@@ -30,94 +30,107 @@ namespace Core
 
         public Retorno CadastroProduto()
         {
-            //validadno formato do produto passado pelo usuário
-            var results = Validate(_produto);
-            if (!results.IsValid)
-                return new Retorno { Status = false, Resultado = results.Errors };
-
-            var db = file.ManipulacaoDeArquivos(true, null);
-
-            if (db.sistema == null)
-                db.sistema = new Sistema();
-            //filtragem para ver se já há um produto na base de dados com o Id fornecido
-            if (db.sistema.Produtos.Exists(x => x.Id == _produto.Id))           
-               return new Retorno() { Status = false, Resultado = "Produto já cadastrado" };
-            
-            db.sistema.Produtos.Add(_produto);
-
-            file.ManipulacaoDeArquivos(false, db.sistema);
-
-            return new Retorno() { Status = true, Resultado = _produto };
+            try
+            {
+                //validadno formato do produto passado pelo usuário
+                var results = Validate(_produto);
+                if (!results.IsValid)
+                    return new Retorno { Status = false, Resultado = results.Errors };
+                var db = file.ManipulacaoDeArquivos(true, null);
+                if (db.sistema == null)
+                    db.sistema = new Sistema();
+                //filtragem para ver se já há um produto na base de dados com o Id fornecido
+                if (db.sistema.Produtos.Exists(x => x.Id == _produto.Id))
+                    return new Retorno() { Status = false, Resultado = "Produto já cadastrado" };
+                db.sistema.Produtos.Add(_produto);
+                file.ManipulacaoDeArquivos(false, db.sistema);
+                return new Retorno { Status = true, Resultado = _produto };
+            }
+            catch { return new Retorno { Status = false, Resultado = "Erro no cadastramento do Produto" }; }
         }
 
         public Retorno ExibirProdutoId(int id)
         {
-            //exibindo produto via Id 
-            var arquivo = file.ManipulacaoDeArquivos(true, null);
-            if (arquivo.sistema == null)
-                arquivo.sistema = new Sistema();
-            //filtrando por Id o resultado a ser exibido
-            var resultado = arquivo.sistema.Produtos.Where(x => x.Id == id);
-            return new Retorno() { Status = true, Resultado = resultado };
-
+            try
+            {
+                //exibindo produto via Id 
+                var arquivo = file.ManipulacaoDeArquivos(true, null);
+                if (arquivo.sistema == null)
+                    arquivo.sistema = new Sistema();
+                //filtrando por Id o resultado a ser exibido
+                var resultado = arquivo.sistema.Produtos.Where(x => x.Id == id);
+                return new Retorno { Status = true, Resultado = resultado };
+            }
+            catch { return new Retorno { Status = false, Resultado = "Erro na exibição Produto" }; }
         }
 
         public Retorno ExibirProdutoDataCadastro(string dataCadastro)
         {
-            //fazendo o mesmo via data cadastro 
-            var arquivo = file.ManipulacaoDeArquivos(true, null);
-            if (arquivo.sistema == null)
-                arquivo.sistema = new Sistema();
-            //filtrando por data de cadastro com Lambda
-            var resultado = arquivo.sistema.Produtos.Where(x => x.DataCadastro.ToString("ddMMyyyy").Equals(dataCadastro));
-            return new Retorno() { Status = true, Resultado = resultado };
+            try
+            {
+                //fazendo o mesmo via data cadastro 
+                var arquivo = file.ManipulacaoDeArquivos(true, null);
+                if (arquivo.sistema == null)
+                    arquivo.sistema = new Sistema();
+                //filtrando por data de cadastro com Lambda
+                var resultado = arquivo.sistema.Produtos.Where(x => x.DataCadastro.ToString("ddMMyyyy").Equals(dataCadastro));
+                return new Retorno { Status = true, Resultado = resultado };
+            }
+            catch { return new Retorno { Status = false, Resultado = "Erro na exibição Produto" }; }
         }
 
         public Retorno ExibirTodosProdutos(int page, int sizePage)
         {
-
-            var arquivo = file.ManipulacaoDeArquivos(true, null);
-
-            if (arquivo.sistema == null)
-                arquivo.sistema = new Sistema();
-            //instancia de base pois usarei seu método genérico para paginar minha lista de produtos
-            Base classeBase = new Base();
-            //passando a lista de produtos para o metodo de base
-            List<Produto> thirdPage = classeBase.GetPage(arquivo.sistema.Produtos, page, sizePage);
-
-            return new Retorno() { Status = true, Resultado = thirdPage };
+            try
+            {
+                var arquivo = file.ManipulacaoDeArquivos(true, null);
+                if (arquivo.sistema == null)
+                    arquivo.sistema = new Sistema();
+                //instancia de base pois usarei seu método genérico para paginar minha lista de produtos
+                Base classeBase = new Base();
+                //passando a lista de produtos para o metodo de base
+                List<Produto> thirdPage = classeBase.GetPage(arquivo.sistema.Produtos, page, sizePage);
+                return new Retorno { Status = true, Resultado = thirdPage };
+            }
+            catch { return new Retorno { Status = false, Resultado = "Erro na exibição do Pedido" }; }
         }
 
         public Retorno DeletarProdutoId(int id)
         {
-            var arquivo = file.ManipulacaoDeArquivos(true, null);
-            if (arquivo.sistema == null)
-                arquivo.sistema = new Sistema();
-            //filtrando o produto que será removido
-            var resultado = arquivo.sistema.Produtos.Remove(arquivo.sistema.Produtos.Find(s => s.Id == id));
-            //salvando remoção do produto no arquivo
-            file.ManipulacaoDeArquivos(false, arquivo.sistema);
-            return new Retorno() { Status = true, Resultado = "Produto Deletada!" };
+            try
+            {
+                var arquivo = file.ManipulacaoDeArquivos(true, null);
+                if (arquivo.sistema == null)
+                    arquivo.sistema = new Sistema();
+                //filtrando o produto que será removido
+                var resultado = arquivo.sistema.Produtos.Remove(arquivo.sistema.Produtos.Find(s => s.Id == id));
+                //salvando remoção do produto no arquivo
+                file.ManipulacaoDeArquivos(false, arquivo.sistema);
+                return new Retorno { Status = true, Resultado = "Produto Deletada!" };
+            }
+            catch { return new Retorno { Status = false, Resultado = "Erro na deleção do Produto" }; }
         }
 
         public Retorno AtualizarProdutoId(Produto nova, int id)
         {
-            //método para atualizar o produto via Id
-            var arquivo = file.ManipulacaoDeArquivos(true, null);
-
-            if (arquivo.sistema == null)
-                arquivo.sistema = new Sistema();
-            //filtrando o produto a ser atualizado
-            var velha = arquivo.sistema.Produtos.Find(s => s.Id == id);
-            //abastecendo o método de TrocaDados para que ele possa atualizar meu produto
-            var troca = TrocaProduto(nova, velha);
-            //adicionando o novo produto atualizado e retirando o antigo
-            arquivo.sistema.Produtos.Add(troca);
-            arquivo.sistema.Produtos.Remove(velha);
-            //salvando alterações
-            file.ManipulacaoDeArquivos(false, arquivo.sistema);
-
-            return new Retorno() { Status = true, Resultado = $"{troca}\n\nProduto Atualizado!" };
+            try
+            {
+                //método para atualizar o produto via Id
+                var arquivo = file.ManipulacaoDeArquivos(true, null);
+                if (arquivo.sistema == null)
+                    arquivo.sistema = new Sistema();
+                //filtrando o produto a ser atualizado
+                var velha = arquivo.sistema.Produtos.Find(s => s.Id == id);
+                //abastecendo o método de TrocaDados para que ele possa atualizar meu produto
+                var troca = TrocaProduto(nova, velha);
+                //adicionando o novo produto atualizado e retirando o antigo
+                arquivo.sistema.Produtos.Add(troca);
+                arquivo.sistema.Produtos.Remove(velha);
+                //salvando alterações
+                file.ManipulacaoDeArquivos(false, arquivo.sistema);
+                return new Retorno { Status = true, Resultado = $"{troca}\n\nProduto Atualizado!" };
+            }
+            catch { return new Retorno { Status = false, Resultado = "Erro na atualização do Produto" }; }
         }
 
         public Produto TrocaProduto(Produto nova, Produto velha)

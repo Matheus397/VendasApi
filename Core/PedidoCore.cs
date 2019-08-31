@@ -31,7 +31,6 @@ namespace Core
                 var results = Validate(_pedido);
                 if (!results.IsValid)
                     return new Retorno { Status = false, Resultado = results.Errors };
-
                 var db = file.ManipulacaoDeArquivos(true, null);
                 //tdsPedidos recebe a lista de todos os pedidos na base de dados
                 var tdsPedidos = db.sistema.Pedidos;
@@ -43,7 +42,6 @@ namespace Core
                 var tdsProdutos = db.sistema.Produtos;
                 //todos os clientes
                 var tdsClientes = db.sistema.Clientes;
-
                 if (db.sistema == null)
                     db.sistema = new Sistema();
                 //validando com lamda se já existe na base de dados um pedido com o Id od que está sendo registrado
@@ -62,66 +60,73 @@ namespace Core
                     _pedido.total_Pedido = _pedido.total_Pedido * 0.90;
                 //adicionando o pedido na base de dados
                 tdsPedidos.Add(_pedido);
-
                 file.ManipulacaoDeArquivos(false, db.sistema);
-                return new Retorno() { Status = true, Resultado = _pedido };
+                return new Retorno { Status = true, Resultado = _pedido };
             }
             catch
             {
                 //por segurança alerto um erro no pedido caso algo dê errado
-                return new Retorno() { Status = false, Resultado = "Erro no Pedido" };
+                return new Retorno { Status = false, Resultado = "Erro no Pedido" };
             }
         }
 
         public Retorno ExibirTodosPedidos(int page, int sizePage)
         {
-            //exibindo todos os pedidos de maneira paginada
-            var arquivo = file.ManipulacaoDeArquivos(true, null);
-
-            if (arquivo.sistema == null)
-                arquivo.sistema = new Sistema();
-            //instancia da classe base
-            Base classeBase = new Base();
-            //usando o metodo generico de base para paginar pedidos
-            List<Pedido> thirdPage = classeBase.GetPage(arquivo.sistema.Pedidos, page, sizePage);
-            return new Retorno() { Status = true, Resultado = thirdPage };
+            try
+            {
+                //exibindo todos os pedidos de maneira paginada
+                var arquivo = file.ManipulacaoDeArquivos(true, null);
+                if (arquivo.sistema == null)
+                    arquivo.sistema = new Sistema();
+                //instancia da classe base
+                Base classeBase = new Base();
+                //usando o metodo generico de base para paginar pedidos
+                List<Pedido> thirdPage = classeBase.GetPage(arquivo.sistema.Pedidos, page, sizePage);
+                return new Retorno { Status = true, Resultado = thirdPage };
+            }
+            catch { return new Retorno { Status = false, Resultado = "Erro na exibição Pedido" }; }
         }
 
         public Retorno ExibirPedidoId(int id)
         {
-            //exibição de pedidos por Id
-            var arquivo = file.ManipulacaoDeArquivos(true, null);
-
-            if (arquivo.sistema == null)
-                arquivo.sistema = new Sistema();
-
-            var pedidos = arquivo.sistema.Pedidos.Where(x => x.Id == id);
-            return new Retorno() { Status = true, Resultado = pedidos };
+            try
+            {
+                //exibição de pedidos por Id
+                var arquivo = file.ManipulacaoDeArquivos(true, null);
+                if (arquivo.sistema == null)
+                    arquivo.sistema = new Sistema();
+                return new Retorno { Status = true, Resultado = arquivo.sistema.Pedidos.Where(x => x.Id == id) };
+            }
+            catch { return new Retorno { Status = false, Resultado = "Erro no Pedido" }; }
         }
 
         public Retorno ExibirPedidoDataCadastro(string dataCadastro)
         {
-            //exibição de pedidos por data de cadastro
-            var arquivo = file.ManipulacaoDeArquivos(true, null);
-
-            if (arquivo.sistema == null)
-                arquivo.sistema = new Sistema();
-
-            var resultado = arquivo.sistema.Pedidos.Where(x => x.DataCadastro.ToString("ddMMyyyy").Equals(dataCadastro));
-            return new Retorno() { Status = true, Resultado = resultado };
+            try
+            {
+                //exibição de pedidos por data de cadastro
+                var arquivo = file.ManipulacaoDeArquivos(true, null);
+                if (arquivo.sistema == null)
+                    arquivo.sistema = new Sistema();
+                return new Retorno { Status = true, Resultado = arquivo.sistema.Pedidos.Where(x => x.DataCadastro.ToString("ddMMyyyy").Equals(dataCadastro)) };
+            }
+            catch { return new Retorno { Status = false, Resultado = "Erro no Pedido" }; }
         }
 
         public Retorno DeletarPedidoId(int id)
         {
-            //deleção de pedidos por id 
-            var arquivo = file.ManipulacaoDeArquivos(true, null);
-
-            if (arquivo.sistema == null)
-                arquivo.sistema = new Sistema();
-            //filtrando o pedido que ser deletado com lambda
-            var resultado = arquivo.sistema.Pedidos.Remove(arquivo.sistema.Pedidos.Find(s => s.Id == id));
-            file.ManipulacaoDeArquivos(false, arquivo.sistema);
-            return new Retorno() { Status = true, Resultado = null };
+            try
+            {
+                //deleção de pedidos por id 
+                var arquivo = file.ManipulacaoDeArquivos(true, null);
+                if (arquivo.sistema == null)
+                    arquivo.sistema = new Sistema();
+                //filtrando o pedido que ser deletado com lambda
+                arquivo.sistema.Pedidos.Remove(arquivo.sistema.Pedidos.Find(s => s.Id == id));
+                file.ManipulacaoDeArquivos(false, arquivo.sistema);
+                return new Retorno { Status = true, Resultado = null };
+            }
+            catch { return new Retorno { Status = false, Resultado = "Erro na deleção do Pedido" }; }
         }
     }
 }
