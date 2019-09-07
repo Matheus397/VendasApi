@@ -23,11 +23,11 @@ namespace ApiProject.Controllers
             return BadRequest(cadastro.Resultado);
         }
 
-        [HttpGet("buscaPorId")]
+        [HttpGet("BuscaPorId/{id}")]
         //busca por id fromquery
         [ProducesResponseType(200, Type = typeof(Pedido))]
         [ProducesResponseType(400)]
-        public async Task<IActionResult> Get([FromQuery] int id)
+        public async Task<IActionResult> Get(int id)
         {
             var exibe = new PedidoCore().ExibirPedidoId(id);
             if (exibe.Status)
@@ -35,7 +35,7 @@ namespace ApiProject.Controllers
             return BadRequest(exibe.Resultado);
         }
 
-        [HttpGet("buscaPorData")]
+        [HttpGet("BuscaPorData")]
         //busca por data fromquery
         [ProducesResponseType(200, Type = typeof(Pedido))]
         [ProducesResponseType(400)]
@@ -47,7 +47,7 @@ namespace ApiProject.Controllers
             return BadRequest(exibe.Resultado);
         }
 
-        [HttpGet("buscaPaginada")]
+        [HttpGet("BuscaPaginada")]
         //buscapaginada passando os inteiros que definiraro a config das paginas
         [ProducesResponseType(200, Type = typeof(List<Pedido>))]
         [ProducesResponseType(400)]
@@ -59,11 +59,11 @@ namespace ApiProject.Controllers
             return BadRequest(exibe.Resultado);
         }
 
-        [HttpDelete("deletePorId")]
+        [HttpDelete("DeletePorId/{id}")]
         //delete fromquery
         [ProducesResponseType(200)]
         [ProducesResponseType(400)]
-        public async Task<IActionResult> Delete([FromQuery] int id)
+        public async Task<IActionResult> Delete(int id)
         {
             var deleta = new PedidoCore().DeletarPedidoId(id);
 

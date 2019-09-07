@@ -22,11 +22,11 @@ namespace ApiProject.Controllers
             return BadRequest(cadastro.Resultado);
         }
 
-        [HttpGet("buscaPorId")]
+        [HttpGet("BuscaPorId/{id}")]
         //busca por id fromquery
         [ProducesResponseType(200, Type = typeof(Produto))]
         [ProducesResponseType(400)]
-        public async Task<IActionResult> Get([FromQuery] int id)
+        public async Task<IActionResult> Get(int id)
         {
             var exibe = new ProdutoCore().ExibirProdutoId(id);
             if (exibe.Status)
@@ -34,7 +34,7 @@ namespace ApiProject.Controllers
             return BadRequest(exibe.Resultado);
         }
 
-        [HttpGet("buscaPorData")]
+        [HttpGet("BuscaPorData")]
         //busca por data fromquery
         [ProducesResponseType(200, Type = typeof(Produto))]
         [ProducesResponseType(400)]
@@ -46,7 +46,7 @@ namespace ApiProject.Controllers
             return BadRequest(exibe.Resultado);
         }
 
-        [HttpGet("buscaPaginada")]
+        [HttpGet("BuscaPaginada")]
         //busca paginada
         [ProducesResponseType(200, Type = typeof(List<Produto>))]
         [ProducesResponseType(400)]
@@ -58,11 +58,11 @@ namespace ApiProject.Controllers
             return BadRequest(exibe.Resultado);
         }
 
-        [HttpDelete("deletePorId")]
+        [HttpDelete("DeletePorId/{id}")]
         //deleção por id
         [ProducesResponseType(200)]
         [ProducesResponseType(400)]
-        public async Task<IActionResult> Delete([FromQuery] int id)
+        public async Task<IActionResult> Delete(int id)
         {
             var deleta = new ProdutoCore().DeletarProdutoId(id);
             if (deleta.Status)
@@ -70,11 +70,11 @@ namespace ApiProject.Controllers
             return BadRequest(deleta.Resultado);
         }
 
-        [HttpPut("atualizaPorId")]
+        [HttpPut("AtualizaPorId/{id}")]
         //atualizaçoa frombody e escolhendo o que sera ataulizado por Id
         [ProducesResponseType(200, Type = typeof(Produto))]
         [ProducesResponseType(400)]
-        public async Task<IActionResult> Put([FromQuery] int id, [FromBody] Produto pauta)
+        public async Task<IActionResult> Put(int id, [FromBody] Produto pauta)
         {
             var atualiza = new ProdutoCore().AtualizarProdutoId(pauta, id);
             if (atualiza.Status)

@@ -8,6 +8,7 @@ namespace Model
     {
         //atributos do produto
         public string nome_Produto { get; set; }
-        public double valor_Produto { get; set; }       
+        public double valor_Produto { get; set; } 
+        public int quantidade { get; set; }
     }
 }

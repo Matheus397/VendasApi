@@ -25,7 +25,7 @@ namespace ApiProject
                 c.SwaggerDoc("v1",
                     new Swashbuckle.AspNetCore.Swagger.Info
                     {
-                        Title = "API Votação",
+                        Title = "Loja Api",
                         Version = "v2"
                     });
             }
